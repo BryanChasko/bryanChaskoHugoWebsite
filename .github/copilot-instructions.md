@@ -1,3 +1,53 @@
+# Copilot Instructions – bryanchasko.com
+
+Hugo portfolio site for Bryan Chasko. Custom theme (`bryan-chasko-theme`) with
+3D/WebGL additions. Deployed to S3 + CloudFront.
+
+## Agent Squad
+
+See `.squad/` for the full squad configuration:
+
+- **Team roster:** `.squad/team.md`
+- **Coordinator:** Harald — routes all work, manages scope and priority
+- **Specialists:** Stratia (Site Architecture), Orin (Hugo Dev Environment),
+  Solan (Build & Deploy), Myrren (AWS/CDN), Kade Vox (Playwright Tests),
+  Scribe (Logger), Ralph (Work Monitor)
+
+---
+
+## Project Overview
+
+| Property | Value |
+|---|---|
+| Site URL | https://bryanchasko.com |
+| Framework | Hugo |
+| Theme | `bryan-chasko-theme` (custom, lives in `themes/`) |
+| Hosting | AWS S3 + CloudFront |
+| Testing | Playwright (visual regression, WebGL, cross-browser) |
+| Infrastructure | `infrastructure/` (CloudFront/S3 JSON configs) + `terraform/` |
+
+## Key Commands
+
+```bash
+hugo server --config config.dev.toml   # local preview
+hugo --minify                          # production build
+./scripts/deploy.sh                    # build + S3 sync + CloudFront invalidation
+npm test                               # Playwright tests (all browsers)
+npm run test:chromium                  # Chrome only
+```
+
+## Conventions
+
+- **Never edit `themes/`** — all overrides go in `layouts/` and `assets/`
+- **WebGL assets:** edit `themes/bryan-chasko-theme/assets/js/webgl-scenes/`,
+  then sync: `cp themes/bryan-chasko-theme/assets/js/webgl-scenes/*.js themes/bryan-chasko-theme/static/js/webgl-scenes/`
+- **Never deploy with `buildDrafts = true`**
+- **CSS variables only** — no hardcoded colors; use `variables.css` / `nebula.css`
+- **CloudFront invalidation** required after every deploy touching cached content
+- **Kiro steering rules** live in `.kiro/steering/` — Kiro reads these automatically
+
+---
+
 # Agent Instructions: Home Page CSS (Fragment)
 
 ## Purpose
