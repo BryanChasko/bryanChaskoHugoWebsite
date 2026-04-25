@@ -1,0 +1,52 @@
+---
+# woodpecker ci — bryan-chasko-com quality gates
+# repo: chasko-labs/bryan-chasko-com
+# runs on pull_request, push to main, manual trigger
+# does NOT deploy — see deploy.yml for deploy pipeline
+
+when:
+  - event: [pull_request, push, manual]
+    branch: main
+    path:
+      include:
+        - "**/*.js"
+        - "**/*.ts"
+        - "**/*.json"
+        - biome.json
+        - package.json
+        - .woodpecker/ci.yml
+
+steps:
+  - name: tier-0-draft-gate
+    image: alpine:3.21
+    commands:
+      - |
+        if [ "${CI_COMMIT_PULL_REQUEST_LABELS}" != "" ]; then
+          echo "$CI_COMMIT_PULL_REQUEST_LABELS" | grep -q "draft" && echo "draft pr — skipping" && exit 78 || true
+        fi
+        echo "not a draft — continuing"
+
+  - name: tier-0-skip-ci-gate
+    image: alpine:3.21
+    depends_on: [tier-0-draft-gate]
+    commands:
+      - |
+        echo "$CI_COMMIT_MESSAGE" | grep -qi "\[skip ci\]" && echo "skip ci requested — skipping" && exit 78 || true
+        echo "no skip-ci flag — continuing"
+
+  - name: tier-0-metadata
+    image: alpine:3.21
+    depends_on: [tier-0-skip-ci-gate]
+    commands:
+      - echo "repo       $CI_REPO"
+      - echo "commit     $CI_COMMIT_SHA"
+      - echo "branch     $CI_COMMIT_BRANCH"
+      - echo "event      $CI_PIPELINE_EVENT"
+      - echo "pipeline   $CI_PIPELINE_NUMBER"
+
+  - name: biome
+    image: ghcr.io/biomejs/biome:2.4.10
+    depends_on: [tier-0-metadata]
+    failure: fail
+    commands:
+      - biome ci --diagnostic-level=error .

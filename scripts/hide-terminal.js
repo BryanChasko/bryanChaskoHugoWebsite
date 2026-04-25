@@ -1,7 +1,7 @@
 // Hide terminal and show social icons for testing
-(function() {
-    const style = document.createElement('style');
-    style.textContent = `
+(() => {
+	const style = document.createElement("style");
+	style.textContent = `
         .terminal-wrapper {
             display: none !important;
         }
@@ -14,6 +14,6 @@
             padding: var(--space-md) 0;
         }
     `;
-    document.head.appendChild(style);
-    console.log('Terminal hidden, social icons visible');
+	document.head.appendChild(style);
+	console.log("Terminal hidden, social icons visible");
 })();
