@@ -157,7 +157,7 @@
 		</header>
 		<div class="elevation-stack">
 			{{ range $t.elevation }}
-			<article class="elevation-tile" style="background: var({{ .var }})">
+			<article class="elevation-tile" style="background: var({{ .var | safeCSS }})">
 				<strong>{{ .name }}</strong>
 				<code>{{ .var }}</code>
 				<p>{{ .role }}</p>
