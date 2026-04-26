@@ -41,6 +41,9 @@ class WebGLSceneInitializer {
 		// Setup navigation transitions
 		this.setupNavigationTransitions();
 
+		// Subscribe to theme-toggle CustomEvent
+		this.setupThemeChangeListener();
+
 		this.isInitialized = true;
 	}
 
@@ -261,6 +264,38 @@ class WebGLSceneInitializer {
 	}
 
 	/**
+	 * Subscribe to themechange CustomEvent fired by the theme-toggle handler.
+	 * All registered scenes that expose applyTheme() receive the new theme value.
+	 * Scenes that read CSS vars live each frame (RippleScene, ShimmerScene) pick up
+	 * the updated vars automatically — applyTheme() is only required for scenes that
+	 * cache color state at construction time (OrbitScene, SkillsNetworkScene).
+	 * Color swap is always instant — no tween — so prefers-reduced-motion is satisfied.
+	 */
+	setupThemeChangeListener() {
+		this._themeChangeHandler = (e) => {
+			const theme = e.detail?.theme;
+			if (!theme) return;
+
+			// Dispatch to all managed scenes
+			for (const scene of this.scenes) {
+				if (typeof scene.applyTheme === "function") {
+					scene.applyTheme(theme);
+				}
+			}
+
+			// Dispatch to transition scene (reads data-theme live, no-op but safe to call)
+			if (
+				this.transitionScene &&
+				typeof this.transitionScene.applyTheme === "function"
+			) {
+				this.transitionScene.applyTheme(theme);
+			}
+		};
+
+		window.addEventListener("themechange", this._themeChangeHandler);
+	}
+
+	/**
 	 * Cleanup all scenes
 	 */
 	dispose() {
@@ -275,6 +310,12 @@ class WebGLSceneInitializer {
 			this.transitionScene.destroy();
 		}
 		this.transitionScene = null;
+
+		// Unbind themechange listener
+		if (this._themeChangeHandler) {
+			window.removeEventListener("themechange", this._themeChangeHandler);
+			this._themeChangeHandler = null;
+		}
 
 		this.isInitialized = false;
 	}

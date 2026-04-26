@@ -237,7 +237,9 @@ class ConstellationScene {
 	}
 
 	setupThemeListener() {
-		// Use MutationObserver to watch for theme changes
+		// MutationObserver: watch data-theme attribute for direct DOM toggles.
+		// Kept for backwards compatibility with any toggle path that does not dispatch
+		// the 'themechange' CustomEvent.
 		const observer = new MutationObserver((mutations) => {
 			mutations.forEach((mutation) => {
 				if (mutation.attributeName === "data-theme") {
@@ -250,6 +252,13 @@ class ConstellationScene {
 			attributes: true,
 			attributeFilter: ["data-theme"],
 		});
+
+		// themechange CustomEvent: dispatched by the theme-toggle click handler.
+		// Color swap is instant — no tween — so prefers-reduced-motion is satisfied.
+		this._themeChangeHandler = () => {
+			this.updateThemeColors();
+		};
+		window.addEventListener("themechange", this._themeChangeHandler);
 
 		// Initial color setup
 		this.updateThemeColors();
@@ -531,6 +540,11 @@ class ConstellationScene {
 
 		if (this.resizeObserver) {
 			this.resizeObserver.disconnect();
+		}
+
+		if (this._themeChangeHandler) {
+			window.removeEventListener("themechange", this._themeChangeHandler);
+			this._themeChangeHandler = null;
 		}
 
 		if (this.gl) {
