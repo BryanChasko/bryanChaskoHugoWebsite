@@ -1,6 +1,9 @@
-/* Card Component Styles */
+/* Card Component Styles
+   tier: #help-hero keeps full glassmorphism (signature, single instance per page).
+   .help-service-card + .note-entry demoted to flat — backdrop-filter +
+   decorative pseudo-elements removed to drop mobile gpu cost (audit 2026-04-26) */
 
-/* Service Cards - Modern Glassmorphism Design */
+/* Service Cards - Flat Gradient */
 .help-services-list {
 	display: flex;
 	flex-direction: column;
@@ -26,69 +29,15 @@
 		rgba(255, 255, 255, 0.95) 60%,
 		rgba(255, 247, 237, 0.1) 100%
 	);
-	backdrop-filter: blur(8px);
-	-webkit-backdrop-filter: blur(8px);
-	transition: all var(--transition-base);
+	transition:
+		border-color var(--transition-base),
+		box-shadow var(--transition-base),
+		transform var(--transition-base);
 	overflow: hidden;
 	box-shadow:
 		0 2px 12px -2px rgba(94, 65, 162, 0.08),
 		0 1px 4px -1px rgba(0, 0, 0, 0.04),
 		inset 0 1px 0 rgba(255, 255, 255, 0.8);
-}
-
-/* Gradient header strip */
-.help-service-card::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: 3px;
-	background: linear-gradient(
-		90deg,
-		transparent 0%,
-		var(--nebula-purple) 20%,
-		var(--nebula-lavender) 50%,
-		var(--nebula-orange) 80%,
-		transparent 100%
-	);
-	opacity: 0.6;
-	transition: all var(--transition-base);
-}
-
-/* Corner accent glow */
-.help-service-card::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 100px;
-	height: 100px;
-	background: radial-gradient(
-		circle at 100% 0%,
-		rgba(129, 105, 197, 0.06) 0%,
-		transparent 70%
-	);
-	opacity: 0;
-	transition: opacity var(--transition-base);
-	pointer-events: none;
-}
-
-.help-service-card:hover::before {
-	opacity: 1;
-	background: linear-gradient(
-		90deg,
-		var(--nebula-purple) 0%,
-		var(--nebula-lavender) 40%,
-		var(--nebula-orange) 70%,
-		var(--nebula-purple) 100%
-	);
-	background-size: 200% 100%;
-	animation: card-gradient-sweep 3s ease-in-out infinite;
-}
-
-.help-service-card:hover::after {
-	opacity: 1;
 }
 
 [data-theme="dark"] .help-service-card {
@@ -104,25 +53,6 @@
 		0 4px 20px -4px rgba(0, 0, 0, 0.3),
 		0 0 25px -10px rgba(129, 105, 197, 0.1),
 		inset 0 1px 0 rgba(129, 105, 197, 0.1);
-}
-
-[data-theme="dark"] .help-service-card::before {
-	background: linear-gradient(
-		90deg,
-		transparent 0%,
-		var(--nebula-lavender) 20%,
-		#a78bfa 50%,
-		var(--nebula-orange) 80%,
-		transparent 100%
-	);
-}
-
-[data-theme="dark"] .help-service-card::after {
-	background: radial-gradient(
-		circle at 100% 0%,
-		rgba(129, 105, 197, 0.12) 0%,
-		transparent 70%
-	);
 }
 
 .help-service-card:hover {
@@ -141,10 +71,6 @@
 		0 12px 30px -8px rgba(0, 0, 0, 0.4),
 		0 0 35px -10px rgba(129, 105, 197, 0.2),
 		inset 0 1px 0 rgba(129, 105, 197, 0.15);
-}
-
-[data-theme="dark"] .help-service-card:hover::before {
-	box-shadow: 0 0 8px 1px rgba(129, 105, 197, 0.25);
 }
 
 .help-service-card h3 {
@@ -352,24 +278,6 @@
 	opacity: 0.6;
 }
 
-/* Subtle corner glow on hover */
-.note-entry::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 120px;
-	height: 120px;
-	background: radial-gradient(
-		circle at 100% 0%,
-		rgba(129, 105, 197, 0.08) 0%,
-		transparent 60%
-	);
-	opacity: 0;
-	transition: opacity var(--transition-base);
-	pointer-events: none;
-}
-
 .note-entry:hover::before {
 	opacity: 0.9;
 	background: linear-gradient(
@@ -381,10 +289,6 @@
 	);
 	background-size: 200% 100%;
 	animation: card-gradient-sweep 3s ease-in-out infinite;
-}
-
-.note-entry:hover::after {
-	opacity: 0.8;
 }
 
 @keyframes card-gradient-sweep {
