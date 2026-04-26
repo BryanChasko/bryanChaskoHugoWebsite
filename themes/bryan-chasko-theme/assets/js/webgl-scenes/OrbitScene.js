@@ -207,6 +207,17 @@ class OrbitScene extends BaseScene {
 	}
 
 	/**
+	 * Flush cached color state after a theme swap.
+	 * Orbit particle and ring colors are read via getThemeColor() live each render frame,
+	 * so they auto-resolve from the updated CSS vars without any flush here.
+	 * Only centerNode.color is stored at construction time and must be refreshed.
+	 * Called by SceneInitializer._themeChangeHandler on the 'themechange' CustomEvent.
+	 */
+	applyTheme(_theme) {
+		this.centerNode.color = this.getThemeColor("--cosmic-energy");
+	}
+
+	/**
 	 * Override destroy to cleanup container reference
 	 */
 	destroy() {

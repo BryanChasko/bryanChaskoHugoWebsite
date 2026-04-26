@@ -325,6 +325,24 @@ class SkillsNetworkScene extends BaseScene {
 		}
 	}
 
+	/**
+	 * Flush cached node color state after a theme swap.
+	 * Edge colors are read via getThemeColor() live each render frame and auto-resolve.
+	 * Node colors are stored per-node at initializeNetwork() time and must be refreshed.
+	 * Called by SceneInitializer._themeChangeHandler on the 'themechange' CustomEvent.
+	 */
+	applyTheme(_theme) {
+		for (const node of this.nodes) {
+			if (node.layer === 0) {
+				node.color = this.getThemeColor("--nebula-orange");
+			} else if (node.layer === 1) {
+				node.color = this.getThemeColor("--nebula-purple");
+			} else {
+				node.color = this.getThemeColor("--nebula-lavender");
+			}
+		}
+	}
+
 	setupFallback() {
 		// Create SVG fallback
 		const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
