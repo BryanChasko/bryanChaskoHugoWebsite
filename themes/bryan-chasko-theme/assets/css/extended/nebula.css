@@ -414,6 +414,9 @@
 	--duration-base: 200ms;
 	--duration-slow: 300ms;
 
+	/* Entrance stagger — per-card delay increment for page-load reveal (#34) */
+	--stagger: 80ms;
+
 	/* ============================================
      SEMANTIC STATE COLORS (#27)
      Coordinates with existing palette:
@@ -751,6 +754,26 @@ body::after {
 	50% {
 		opacity: 0.95;
 		filter: brightness(1.02);
+	}
+}
+
+/* ============================================
+   ENTRANCE REVEAL — page-load stagger (#34)
+   One high-impact moment per route.
+   Gate: prefers-reduced-motion: reduce block at
+   bottom of this file nullifies animation-duration
+   site-wide via !important — no bypass needed here.
+   ============================================ */
+@media (prefers-reduced-motion: no-preference) {
+	@keyframes entrance-fade-up {
+		from {
+			opacity: 0;
+			transform: translateY(16px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 }
 
@@ -1472,6 +1495,41 @@ button[type="submit"] {
 /* note-entry hover border: nebula-specific purple tint, overrides --color-border generic */
 .note-entry:hover {
 	border-color: rgba(94, 65, 162, 0.25);
+}
+
+/* ============================================
+   ENTRANCE STAGGER — home post-card stack (#34)
+   Stagger capped at card 6: cards 7+ share the
+   last delay so a long list never becomes absurd.
+   animation-fill-mode: both holds the from-state
+   before the delay fires so cards don't flash visible.
+   ============================================ */
+@media (prefers-reduced-motion: no-preference) {
+	.note-entry {
+		animation: entrance-fade-up 420ms var(--ease-out) both;
+		animation-delay: 0ms;
+	}
+
+	.note-entry:nth-of-type(2) { animation-delay: calc(var(--stagger) * 1); }
+	.note-entry:nth-of-type(3) { animation-delay: calc(var(--stagger) * 2); }
+	.note-entry:nth-of-type(4) { animation-delay: calc(var(--stagger) * 3); }
+	.note-entry:nth-of-type(5) { animation-delay: calc(var(--stagger) * 4); }
+	.note-entry:nth-of-type(n+6) { animation-delay: calc(var(--stagger) * 5); }
+
+	/* ============================================
+	   ENTRANCE STAGGER — services card stack (#34)
+	   Same keyframe, same stagger token, same cap.
+	   ============================================ */
+	.help-service-card {
+		animation: entrance-fade-up 420ms var(--ease-out) both;
+		animation-delay: 0ms;
+	}
+
+	.help-service-card:nth-of-type(2) { animation-delay: calc(var(--stagger) * 1); }
+	.help-service-card:nth-of-type(3) { animation-delay: calc(var(--stagger) * 2); }
+	.help-service-card:nth-of-type(4) { animation-delay: calc(var(--stagger) * 3); }
+	.help-service-card:nth-of-type(5) { animation-delay: calc(var(--stagger) * 4); }
+	.help-service-card:nth-of-type(n+6) { animation-delay: calc(var(--stagger) * 5); }
 }
 /* Navigation Component Styles */
 
