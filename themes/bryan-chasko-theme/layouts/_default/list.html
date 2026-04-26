@@ -100,6 +100,11 @@
   {{- end }}
   <a class="entry-link" aria-label="note link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
 </article>
+{{/* Render social widget row (instagram + github-dashboard) after first note-entry
+     so notes content reaches above-the-fold on 1440×900 baseline — issue #35 */}}
+{{- if (and $.IsHome (eq $paginator.PageNumber 1) (eq $index 0)) }}
+{{- partial "home_social.html" . }}
+{{- end }}
 {{- end }}
 
 {{- if gt $paginator.TotalPages 1 }}
