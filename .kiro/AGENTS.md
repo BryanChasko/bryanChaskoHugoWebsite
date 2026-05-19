@@ -65,8 +65,6 @@ high — governance authority, capability matrix edits, cross-collective propaga
 
 ## squad predecessor
 
-
-
 (populated only when the repo migrates from the squad collective; empty otherwise)
 
 ## the rule in one sentence
