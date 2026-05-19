@@ -148,7 +148,7 @@ class SkillsNetworkScene extends BaseScene {
 		const my = e.clientY - rect.top;
 
 		// Check if mouse is over a node
-		for (let node of this.nodes) {
+		for (const node of this.nodes) {
 			const dist = Math.hypot(node.x - mx, node.y - my);
 			if (dist < node.radius * 3) {
 				this.selectedNode = node;
@@ -231,7 +231,7 @@ class SkillsNetworkScene extends BaseScene {
 			}
 
 			// Attraction to connected nodes (via edges)
-			for (let edge of this.edges) {
+			for (const edge of this.edges) {
 				if (edge.from === node.id) {
 					const other = this.nodes[edge.to];
 					const dx = other.x - node.x;
@@ -289,7 +289,7 @@ class SkillsNetworkScene extends BaseScene {
 		this.gl.uniform1f(this.uTime, time);
 
 		// Draw edges (lines)
-		for (let edge of this.edges) {
+		for (const edge of this.edges) {
 			const from = this.nodes[edge.from];
 			const to = this.nodes[edge.to];
 
@@ -304,7 +304,7 @@ class SkillsNetworkScene extends BaseScene {
 		}
 
 		// Draw nodes
-		for (let node of this.nodes) {
+		for (const node of this.nodes) {
 			const positions = new Float32Array([node.x, node.y]);
 			this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.positionBuffer);
 			this.gl.bufferData(this.gl.ARRAY_BUFFER, positions, this.gl.DYNAMIC_DRAW);
@@ -335,7 +335,7 @@ class SkillsNetworkScene extends BaseScene {
 		svg.style.left = "0";
 
 		// Draw edges
-		for (let edge of this.edges) {
+		for (const edge of this.edges) {
 			const from = this.nodes[edge.from];
 			const to = this.nodes[edge.to];
 
@@ -353,7 +353,7 @@ class SkillsNetworkScene extends BaseScene {
 		}
 
 		// Draw nodes
-		for (let node of this.nodes) {
+		for (const node of this.nodes) {
 			const circle = document.createElementNS(
 				"http://www.w3.org/2000/svg",
 				"circle",

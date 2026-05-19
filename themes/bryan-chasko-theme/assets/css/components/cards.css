@@ -235,7 +235,10 @@
    parallels .help-service-card:first-of-type below. */
 .note-entry:first-of-type {
 	border-left: 3px solid var(--brand-orange);
-	padding-left: calc(40px - 3px); /* compensate for border-left so text stays flush */
+	padding-left: calc(
+		40px -
+		3px
+	); /* compensate for border-left so text stays flush */
 }
 
 .note-entry:first-of-type .entry-header h2,

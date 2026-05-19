@@ -481,7 +481,9 @@
    Scoped to color and border-color only; background radial-gradients hard-swap
    (smooth gradient interpolation not feasible across full gradient sets).
    Covered by the global prefers-reduced-motion: reduce block below (0.01ms). */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
 	transition:
 		color var(--duration-base) var(--ease-out),
 		border-color var(--duration-base) var(--ease-out);
@@ -1166,13 +1168,13 @@ h1 {
 	font-size: clamp(1.875rem, 2.29vw + 1.146rem, 2.5rem);
 }
 h2 {
-	font-size: clamp(1.5rem, 1.56vw + 1.0rem, 2rem);
+	font-size: clamp(1.5rem, 1.56vw + 1rem, 2rem);
 }
 h3 {
-	font-size: clamp(1.25rem, 0.78vw + 1.0rem, 1.5rem);
+	font-size: clamp(1.25rem, 0.78vw + 1rem, 1.5rem);
 }
 h4 {
-	font-size: clamp(1.125rem, 0.39vw + 1.0rem, 1.25rem);
+	font-size: clamp(1.125rem, 0.39vw + 1rem, 1.25rem);
 }
 h5 {
 	font-size: clamp(1rem, 0.39vw + 0.875rem, 1.125rem);
@@ -1507,11 +1509,21 @@ button[type="submit"] {
 		animation-delay: 0ms;
 	}
 
-	.note-entry:nth-of-type(2) { animation-delay: calc(var(--stagger) * 1); }
-	.note-entry:nth-of-type(3) { animation-delay: calc(var(--stagger) * 2); }
-	.note-entry:nth-of-type(4) { animation-delay: calc(var(--stagger) * 3); }
-	.note-entry:nth-of-type(5) { animation-delay: calc(var(--stagger) * 4); }
-	.note-entry:nth-of-type(n+6) { animation-delay: calc(var(--stagger) * 5); }
+	.note-entry:nth-of-type(2) {
+		animation-delay: calc(var(--stagger) * 1);
+	}
+	.note-entry:nth-of-type(3) {
+		animation-delay: calc(var(--stagger) * 2);
+	}
+	.note-entry:nth-of-type(4) {
+		animation-delay: calc(var(--stagger) * 3);
+	}
+	.note-entry:nth-of-type(5) {
+		animation-delay: calc(var(--stagger) * 4);
+	}
+	.note-entry:nth-of-type(n + 6) {
+		animation-delay: calc(var(--stagger) * 5);
+	}
 
 	/* ============================================
 	   ENTRANCE STAGGER — services card stack (#34)
@@ -1522,11 +1534,21 @@ button[type="submit"] {
 		animation-delay: 0ms;
 	}
 
-	.help-service-card:nth-of-type(2) { animation-delay: calc(var(--stagger) * 1); }
-	.help-service-card:nth-of-type(3) { animation-delay: calc(var(--stagger) * 2); }
-	.help-service-card:nth-of-type(4) { animation-delay: calc(var(--stagger) * 3); }
-	.help-service-card:nth-of-type(5) { animation-delay: calc(var(--stagger) * 4); }
-	.help-service-card:nth-of-type(n+6) { animation-delay: calc(var(--stagger) * 5); }
+	.help-service-card:nth-of-type(2) {
+		animation-delay: calc(var(--stagger) * 1);
+	}
+	.help-service-card:nth-of-type(3) {
+		animation-delay: calc(var(--stagger) * 2);
+	}
+	.help-service-card:nth-of-type(4) {
+		animation-delay: calc(var(--stagger) * 3);
+	}
+	.help-service-card:nth-of-type(5) {
+		animation-delay: calc(var(--stagger) * 4);
+	}
+	.help-service-card:nth-of-type(n + 6) {
+		animation-delay: calc(var(--stagger) * 5);
+	}
 }
 /* Navigation Component Styles */
 
