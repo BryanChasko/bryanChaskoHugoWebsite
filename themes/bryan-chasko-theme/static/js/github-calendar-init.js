@@ -3,9 +3,7 @@
  * Ensures proper SVG rendering and responsive sizing
  */
 
-(function () {
-	"use strict";
-
+(() => {
 	// Wait for DOM to be ready
 	function initCalendar() {
 		const calendarContainer = document.querySelector(".calendar");
@@ -77,10 +75,10 @@
 	}
 
 	// Re-initialize after GitHubCalendar renders (it may render after initial load)
-	const observer = new MutationObserver(function (mutations) {
-		mutations.forEach(function (mutation) {
+	const observer = new MutationObserver((mutations) => {
+		mutations.forEach((mutation) => {
 			if (mutation.addedNodes.length) {
-				mutation.addedNodes.forEach(function (node) {
+				mutation.addedNodes.forEach((node) => {
 					if (
 						node.nodeType === 1 &&
 						(node.classList?.contains("calendar") ||
