@@ -193,6 +193,6 @@ Use `~/.bcc-site/config.json` for your AWS settings (not in GitHub):
 - Fork → Branch → PR. Keep changes focused: templates, CSS in `assets/` or `layouts/`, and content in `content/`.
 - Run the site locally to verify changes: `hugo server --config hugo.toml -D`.
 - **IMPORTANT**: Don't push to main without:
-  /_ Lines 717-745 omitted _/
+  /_Lines 717-745 omitted_/
 
 thank you — happy hacking
